@@ -1,0 +1,1 @@
+{"name":"Local: test","url":"/Users/dmitt/Desktop/CP/test.c","tests":[{"id":1727439420379,"input":"11/10/2005\n20/5/2016","output":"10 years 7 months and 9 days"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/dmitt/Desktop/CP/test.c","group":"local","local":true}
