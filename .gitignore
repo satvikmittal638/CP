@@ -2,6 +2,6 @@
 *.bin
 *.exe
 *.out
-
+*.cph
 # Ignore .vscode directory
 .vscode/
