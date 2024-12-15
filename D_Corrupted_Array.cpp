@@ -1,11 +1,5 @@
 #include<bits/stdc++.h>
 using namespace std;
-
-void print(vector<long long> v){
-    for(auto e:v) if(e!=-1) cout<<e<<" ";
-    cout<<"\n";
-}
-
 int main()
 {
     int tt;cin>>tt;
