@@ -37,7 +37,7 @@ int main() {
             ll curCost=(ll)lo*(i+1);
             maxCost=max(maxCost,curCost);
         }
-        cout<<maxCost<<"\n";
+        cout<<maxCost<<"\n";    
     }
     return 0;
 }
