@@ -4,6 +4,7 @@ using namespace std;
 #define fastio ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
 #define rall(x) x.rbegin(),x.rend()
 #define all(x) x.begin(),x.end()
+
 class UnionFind {
 private:
     vector<int> p, rank;
@@ -51,33 +52,44 @@ class Edge{
         return wt<other.wt;
     }
 };
+
+
+long long modexp(long long base, long long exp, long long mod) {
+    long long res = 1;
+    while (exp > 0) {
+        if (exp % 2 == 1) {
+            res = (res * base) % mod;
+        }
+        base = (base * base) % mod;
+        exp /= 2;
+    }
+    return res;
+}
+
+
 int main()
 {
-    fastio;
-    int tt;cin>>tt;
-    while(tt--){
-        int n,m;cin>>n>>m;
-        vector<Edge> edges;
-       UnionFind uf(n+1);
-        while(m--){
-            int a,b;
-            long long v;
-            cin>>a>>b>>v;
-            Edge e(a,b,v);
-            edges.emplace_back(e);
+fastio;
+    int n,m;cin>>n>>m;
+    vector<int> a(n);for(auto &i:a) cin>>i;
+    vector<Edge> edges;
+    for(int i=0;i<n;i++){
+        for(int j=i+1;j<n;j++){
+            int x=a[i],y=a[j],
+                cost=(modexp(x,y,m)+modexp(y,x,m))%m;
+            edges.emplace_back(i,j,cost);
         }
-        sort(rall(edges)); // sort in descending to make Maxm ST
-        long long maxSpeed=-1;
-        for(const auto& e:edges){
-            uf.unite(e.u,e.v);
-// as soon as 1 and n are connected, the last edge used is the minm of all edges used 
-//and is maximized by use of maxm spanning tree
-            if(uf.isSameSet(1,n)){
-                maxSpeed=e.wt;
-                break;
-            }
-        }
-        cout<<maxSpeed<<"\n";
     }
+    sort(rall(edges));
+    // make Maxm ST
+    UnionFind uf(n);
+    ll score=0ll;
+    for(const auto &e:edges){
+        if(uf.findSet(e.u)!=uf.findSet(e.v)){
+            score+=e.wt;
+            uf.unite(e.u,e.v);
+        }
+    }
+    cout<<score;
     return 0;
 }
