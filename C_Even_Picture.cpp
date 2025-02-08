@@ -8,15 +8,11 @@ int main()
 {
 fastio;
     int n;cin>>n;
-    multiset<int> tops;
+    cout<<(3*n-2)<<"\n";
     for(int i=0;i<n;i++){
-        int k;cin>>k;
-        auto it=tops.upper_bound(k);
-        if(it!=tops.end()){
-            tops.erase(it);
-        }
-        tops.insert(k);
+        cout<<i<<" "<<i<<"\n";
+        if(i>0)cout<<i<<" "<<i-1<<"\n";
+        if(i<n-1)cout<<i<<" "<<i+1<<"\n";
     }
-    cout<<tops.size();
     return 0;
 }

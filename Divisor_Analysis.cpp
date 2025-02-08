@@ -52,7 +52,7 @@ long long prodDiv(vector<long long>& x,vector<long long>& k){
         base*=modexp(x[i],k[i],MOD);
         if(base>=MOD) base%=MOD;
     }
-    long long prod=modexp(base,exp,MOD);
+    long long prod=modexp(base,(exp)/2,MOD);
     return prod;
 }
 

@@ -8,15 +8,13 @@ int main()
 {
 fastio;
     int n;cin>>n;
-    multiset<int> tops;
+    vector<int> p(n);for(auto &i:p) cin>>i;
+    sort(all(p));
+    ll c1=0ll,c2=0ll;
     for(int i=0;i<n;i++){
-        int k;cin>>k;
-        auto it=tops.upper_bound(k);
-        if(it!=tops.end()){
-            tops.erase(it);
-        }
-        tops.insert(k);
+        c1+=abs(p[i]-p[n/2]);
+        c2+=abs(p[i]-p[(n+1)/2]);
     }
-    cout<<tops.size();
+    cout<<min(c1,c2);
     return 0;
 }

@@ -17,7 +17,6 @@ void solve(){
     for(int i=2;i<=N;i++) if(is_prime[i]) primes.emplace_back(i);
     for(int i=1;i<primes.size();i+=100) cout<<primes[i-1]<<"\n";
 }
-
 int main()
 {
     ios::sync_with_stdio(false);

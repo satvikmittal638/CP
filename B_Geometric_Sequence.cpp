@@ -7,16 +7,15 @@ using namespace std;
 int main()
 {
 fastio;
-    int n;cin>>n;
-    multiset<int> tops;
-    for(int i=0;i<n;i++){
-        int k;cin>>k;
-        auto it=tops.upper_bound(k);
-        if(it!=tops.end()){
-            tops.erase(it);
+    ll n;cin>>n;
+    vector<ll> a(n);
+    for(auto &i:a) cin>>i;
+    bool ok=1;
+    for(ll i=0;i<n-2;i++){
+        if(a[i+1]*a[i+1]!=a[i]*a[i+2]){
+            ok=0;break;
         }
-        tops.insert(k);
     }
-    cout<<tops.size();
+    cout<<(ok?"Yes":"No");
     return 0;
 }

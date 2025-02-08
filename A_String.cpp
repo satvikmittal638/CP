@@ -7,16 +7,12 @@ using namespace std;
 int main()
 {
 fastio;
-    int n;cin>>n;
-    multiset<int> tops;
-    for(int i=0;i<n;i++){
-        int k;cin>>k;
-        auto it=tops.upper_bound(k);
-        if(it!=tops.end()){
-            tops.erase(it);
-        }
-        tops.insert(k);
+    int tt;cin>>tt;
+    while(tt--){
+       string s;cin>>s;
+       int cnt1=0;
+       for(auto c:s) cnt1+=c=='1';
+       cout<<cnt1<<"\n";
     }
-    cout<<tops.size();
     return 0;
 }
