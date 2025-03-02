@@ -12,32 +12,33 @@ fastio;
        int n,k;cin>>n>>k;
        string s;cin>>s;
        vector<int> a(n);for(auto &i:a) cin>>i;
-       set<pair<int,int>> toPaint;
-       for(int i=0;i<n;i++){
-        if(s[i]=='B') toPaint.insert({a[i],i});
-       }
-       string cur(n,'R');
-       while(toPaint.size() && k){
-        auto [val,pos]=*toPaint.rbegin();
-        cur[pos]='B';
-        // paint ngbrs if necessary in the same operation itself
-        int i=pos-1,j=pos+1;
-        while(j<n && cur[j]=='R' && s[j]=='B'){
-            cur[j]='B';
-            toPaint.erase({a[j],j});
-            j++;
+       auto isSafe=[&](int x){
+        string newS;
+        for(int i=0;i<n;i++){
+            if(a[i]>x) newS.push_back(s[i]);
         }
-        while(i>=0 && cur[i]=='R' && s[i]=='B'){
-            cur[i]='B';
-            toPaint.erase({a[i],i});
-            i--;
+        int cnt=(newS[0]=='B');
+        for(int i=1;i<newS.size();i++){
+           if(newS[i]=='B' && (newS[i-1]!='B')){
+            cnt++;
+           } 
         }
-        k--;
+        return cnt<=k;
+       };
+       int lo=0,hi=*max_element(all(a)),ans;
+       while(lo<=hi){
+        int mid=(lo+hi)/2;
+        // cout<<mid<<" ";
+        if(isSafe(mid)){
+            ans=mid;
+            hi=mid-1;
+        }
+        else{
+            lo=mid+1;
+        }
        }
-       int ans=0;
-       for(int i=0;i<n;i++){
-        if(cur[i]!=s[i]) ans=max(ans,a[i]);
-       }
+    //    cout<<"\n";
+    //    cout<<isSafe(0);
        cout<<ans<<"\n";
     }
     return 0;
