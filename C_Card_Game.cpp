@@ -10,17 +10,36 @@ fastio;
     int tt;cin>>tt;
     while(tt--){
        int n;cin>>n;
-       vector<int> a(n);for(auto &i:a) cin>>i;
-       // prf[i] denotes sum of +ves among a[i],a[i+1]..a[n]
-       vector<ll> prf(n+1,0ll);
-       for(int i=n-1;i>=0;i--){
-        prf[i]=prf[i+1]+max(0,a[i]);
+       set<int> a,b;
+       for(int i=1;i<=n;i++){
+        char c;cin>>c;
+        if(c=='A') a.insert(i);
+        else b.insert(i);
        }
-       ll ans=0ll;
-       for(int i=0;i<n;i++){
-        ans=max(ans,(i%2==0?a[i]:0)+prf[i+1]);
+       if(*a.begin()==1 && *a.rbegin()==n){
+        cout<<"Alice\n";
+        continue;
        }
-       cout<<ans<<"\n";
+       if(*b.begin()==1 && *b.rbegin()==n){
+        cout<<"Bob\n";
+        continue;
+       }
+       if(a.find(n)!=a.end() && a.find(n-1)!=a.end()){
+        cout<<"Alice\n";
+        continue;
+       }
+       if(b.find(n)!=b.end() && b.find(n-1)!=b.end()){
+        cout<<"Bob\n";
+        continue;
+       }
+       if(b.find(n)!=b.end() && b.find(n-1)!=b.end()){
+        cout<<"Bob\n";
+        continue;
+       }
+
+
+
+
     }
     return 0;
 }
