@@ -7,27 +7,29 @@ using namespace std;
 int main()
 {
 fastio;
-    int tt;cin>>tt;
+    ll tt;cin>>tt;
     while(tt--){
-       int n;cin>>n;
-       vector<ll> b(2*n+1);
-       set<ll> st;
-       for(int i=1;i<=2*n;i++){
-        cin>>b[i];
-        st.insert(b[i]);
+       ll n;cin>>n;
+       vector<ll>b(2*n);for(auto &i:b) cin>>i;
+       sort(rall(b));
+       vector<ll> a(2*n+2,0);
+       ll j=0;
+       a[1]=b[j];
+       a[2*n]+=a[1];
+       j++;
+       for(ll i=3;i<=2*n+1;i+=2){
+        a[i]=b[j];
+        a[2*n]+=a[i];
+        j++;
        }
-       sort(all(b));
-
-       ll altSum=0ll;
-       for(int i=1;i<=n;i++){
-        altSum-=b[i];
+       for(ll i=2;i<=2*n-2;i+=2){
+        a[i]=b[j];
+        a[2*n]-=a[i];
+        j++;
        }
-       for(int i=n+1;i<=2*n;i++){
-        altSum-=b[i];
-       }
-       b.insert(b.begin()+1,abs(altSum));
-       for(int i=1;i<=2*n+1;i++) cout<<b[i]<<" ";
+       for(ll i=1;i<=2*n+1;i++) cout<<a[i]<<" ";
        cout<<"\n";
+
 
     }
     return 0;
