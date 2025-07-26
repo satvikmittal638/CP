@@ -1,16 +1,33 @@
 #include<bits/stdc++.h>
 using namespace std;
+#define ll long long
+#define fastio ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define rall(x) x.rbegin(),x.rend()
+#define all(x) x.begin(),x.end()
 int main()
 {
+fastio;
     int n;cin>>n;
-    vector<int> a(n+1);
-    for(int i=1;i<=n;i++)cin>>a[i];
-    vector<int> dp(n+1);
-    dp[0]=0;dp[1]=1;
-    for(int i=2;i<=n;i++){
-        if(a[i]-a[i-1]==1) dp[i]=dp[i-1]+1;// continue the prvs subsequence
-        else dp[i]=1; // start a new subseq
+    vector<int> a(n);for(auto &i:a) cin>>i;
+    // dp[i] is the length of consecutive LIS ending with value i
+    map<int,int> dp;
+    dp[a[0]]=1;
+    for(int i=1;i<n;i++){
+        dp[a[i]]=dp[a[i]-1]+1;
     }
-    cout<<dp[n];
+    int ans=0,last;
+    for(auto &[elt,val]:dp){
+        if(ans<val){
+            ans=val;
+            last=elt;
+        }
+    }
+
+    cout<<ans<<"\n";
+    int j=0;
+    for(int i=last-ans+1;i<=last;i++){
+        while(j<n && a[j]!=i) j++;
+        cout<<j+1<<" ";
+    }
     return 0;
 }
