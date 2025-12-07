@@ -10,32 +10,49 @@ fastio;
     int tt;cin>>tt;
     while(tt--){
        int n,k;cin>>n>>k;
-       //dp[l] is idx i s.t. 0<=i<=l s.t. (l-i+1)a[i] is maxm, i.e. a[i] remains as prefix maxm in [i,l] giving maxm cost
-       vector<int> a(n),dp(n);for(auto &i:a) cin>>i;
-       //0<=i<=l
-       auto exp=[&](int l,int i){
-        return (l-i+1)*a[i];
-       };
-       dp[0]=0;// base
-       for(int l=n-1;l>0;l--){
-        // considering pref_max doesn't change, considering pref_max changes at index l
-        int e1=exp(l,dp[l-1]),e2=exp(l,l);
-        // profit increases
-        if(e2>e1){
-            dp[l]=l;
-        }
-        else{
-            dp[l]=dp[l-1];
-        }
+       vector<int> a(n+1);
+       for(int i=1;i<=n;i++) cin>>a[i];
+       // compress the array based on prefix max
+       map<ll,ll> mp;
+       int p_max=0ll;
+       for(int i=1;i<=n;i++){
+        p_max=max(p_max,a[i]);
+        mp[p_max]++;
        }
-       for(auto e:dp) cout<<e<<' ';
-       int i=n-1;
+       vector<ll> comp_a,cnt;
+       for(auto &[k,v]:mp){
+        comp_a.push_back(k);
+        cnt.push_back(v);
+       }
+       // let dp[s][m] is maxm happines for friends we have processed so far
+        vector<vector<ll>> dp(k+1,vector<ll>(k+1,-1));
+        dp[0][0]=0;// base case
+        // O(k^4)
+       for(int i=0;i<comp_a.size();i++){
+        int cap=comp_a[i],len=cnt[i];
+        vector<vector<ll>> nxt_dp(k+1,vector<ll>(k+1,-1));// temp dp for rolling
+        for(int s=0;s<=k;s++){
+            for(int m=0;m<=k;m++){
+                if(dp[s][m]==-1) continue;
+                // maintain maxm at m
+                nxt_dp[s][m]=max(nxt_dp[s][m],dp[s][m]+m*len);
+
+                // try to increase the maximum to j(>m)
+                for(int j=m+1;j<=cap;j++){
+                    if(s+j>k) break;
+                    nxt_dp[s+j][j]=max(nxt_dp[s+j][j],dp[s][m]+j*len);
+                }
+            }
+        }
+        dp=nxt_dp;
+       }
        ll ans=0ll;
-       while(i>=0){
-        ans+=exp(i,dp[i]);
-        i=dp[i]-1;
+       for(int s=0;s<=k;s++){
+        for(int m=0;m<=k;m++){
+            ans=max(ans,dp[s][m]);
+        }
        }
-    //    cout<<ans<<'\n';
+       cout<<ans<<'\n';
     }
     return 0;
 }
