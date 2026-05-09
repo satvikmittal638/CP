@@ -1,6 +1,11 @@
-# Save as gen.py and run: python gen.py > test.txt
-print(1)            # T = 1
-N = 200000          # Max N
+# Save as generate_hack.py
+import sys
+
+# Maximize N to force 10.8 million function calls
+T = 1
+N = 300000
+
+print(T)
 print(N)
-# Print permutation: 200000 199999 ... 2 1
-print(*list(range(N, 0, -1)))
+# Print an array of 1s (values don't affect the complexity here)
+print(*( [1] * N ))

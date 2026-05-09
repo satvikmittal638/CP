@@ -1,34 +1,33 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
-#define endl "\n"
-#define int long long
 
-signed main(){
-    ios_base::sync_with_stdio(0);
-    cin.tie(0);
+
+int main() {
+    
+
     int t;
-    cin>>t;
-    while(t--)
-    {
-        int n;
-        cin>>n;
-        int k;
-        vector<int> a(n+1,LLONG_MAX);
-        for(int i=0;i<n;i++){
-            cin>>k;
-            a[k]=1;
+    cin >> t;
+    while (t--) {
+        int n ; 
+        cin >> n ;
+        
+        vector<int> arr(n) ;
+        for (int i = 0 ; i < n ; i++) cin >> arr[i] ;
+        int i = 1 ;
+        
+        while ( i <= n/2) {
+            if (arr[i-1] > arr[2*i - 1]) {
+                swap(arr[i-1] ,arr[2*i - 1] ) ;
+                if (i % 2 == 0) {
+                    i = (i/2) -1 ;
+                } else i++ ;
+            } else i++ ;
         }
-        for(int i=2;i<=n;i++){
-            if(a[i]==LLONG_MAX)continue;
-            for(int j=i;i*j<=n;j++){
-                if(a[j]==LLONG_MAX)continue;
-                a[i*j]=min(a[i*j],a[i]+a[j]);
-            }
-        }
-        for(int i=1;i<=n;i++){
-            if(a[i]==LLONG_MAX)cout<<-1<<" ";
-            else cout<<a[i]<<" ";
-        }
-        cout<<endl;
+        
+        if (is_sorted(arr.begin() , arr.end())) cout << "YES" << endl ;
+        else cout << "NO" << endl ;
+        
     }
+
+    return 0;
 }
